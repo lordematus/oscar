@@ -5,12 +5,17 @@ from messaging.models import Message
 
 
 class MessageSerializer(serializers.ModelSerializer):
+    sender = serializers.CharField(source='sender.username')
+    recipient = serializers.CharField(source='recipient.username')
+
     class Meta:
         model = Message
-        field = ['sender', 'recipient', 'content', 'timestamp']
+        fields = ['sender', 'recipient', 'content', 'timestamp']
 
 
 class UserSerializer(serializers.ModelSerializer):
+    password = serializers.CharField(write_only=True)
+
     class Meta:
         model = User
-        field = ['username', 'password', 'email']
+        fields = ['username', 'password', 'email']
